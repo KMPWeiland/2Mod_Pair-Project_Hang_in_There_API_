@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe "Posters API", type: :request do
     it 'fetches posters' do
+Poster.destroy_all
 
 @regret = Poster.create!(name: "REGRET",
   description: "Hard work rarely pays off.",
@@ -32,6 +33,26 @@ describe "Posters API", type: :request do
 
     expect(response).to be_successful
 
+    posters = JSON.parse(response.body, symbolize_names: true)
+
+    expect(posters.count).to eq(3)
+
+    posters.each do |poster|
+        expect(poster).to have_key(:id)
+        expect(poster[:id]).to be_an(Integer)
+
+        expect(poster).to have_key(:name)
+        expect(poster[:name]).to be_a(String)
+        expect(poster).to have_key(:description)
+        expect(poster[:description]).to be_a(String)
+        expect(poster).to have_key(:price)
+        expect(poster[:price]).to be_a(Float)
+        expect(poster).to have_key(:year)
+        expect(poster[:year]).to be_a(Integer)
+        expect(poster).to have_key(:img_url)
+        expect(poster[:img_url]).to be_a(String)
+
+    end
     
 
     # posters.each do |poster|

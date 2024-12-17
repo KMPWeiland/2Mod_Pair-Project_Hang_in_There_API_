@@ -1,0 +1,243 @@
+{
+  "RSpec": {
+    "coverage": {
+      "/Users/nvnatasha/turing_work/2mod.2/2Mod_Pair-Project_Hang_in_There_API_/config/environment.rb": {
+        "lines": [
+          null,
+          1,
+          null,
+          null,
+          1
+        ]
+      },
+      "/Users/nvnatasha/turing_work/2mod.2/2Mod_Pair-Project_Hang_in_There_API_/config/application.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/nvnatasha/turing_work/2mod.2/2Mod_Pair-Project_Hang_in_There_API_/config/boot.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1
+        ]
+      },
+      "/Users/nvnatasha/turing_work/2mod.2/2Mod_Pair-Project_Hang_in_There_API_/config/environments/test.rb": {
+        "lines": [
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null
+        ]
+      },
+      "/Users/nvnatasha/turing_work/2mod.2/2Mod_Pair-Project_Hang_in_There_API_/config/initializers/cors.rb": {
+        "lines": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/nvnatasha/turing_work/2mod.2/2Mod_Pair-Project_Hang_in_There_API_/config/initializers/filter_parameter_logging.rb": {
+        "lines": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/nvnatasha/turing_work/2mod.2/2Mod_Pair-Project_Hang_in_There_API_/config/initializers/inflections.rb": {
+        "lines": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/nvnatasha/turing_work/2mod.2/2Mod_Pair-Project_Hang_in_There_API_/config/routes.rb": {
+        "lines": [
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/nvnatasha/turing_work/2mod.2/2Mod_Pair-Project_Hang_in_There_API_/app/models/poster.rb": {
+        "lines": [
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/nvnatasha/turing_work/2mod.2/2Mod_Pair-Project_Hang_in_There_API_/app/models/application_record.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/nvnatasha/turing_work/2mod.2/2Mod_Pair-Project_Hang_in_There_API_/app/controllers/api/v1/posters_controller.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/nvnatasha/turing_work/2mod.2/2Mod_Pair-Project_Hang_in_There_API_/app/controllers/application_controller.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      }
+    },
+    "timestamp": 1734476757
+  }
+}

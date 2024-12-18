@@ -6,7 +6,7 @@ class Api::V1::PostersController < ApplicationController
 
     def show
         poster = Poster.find(params[:id])
-        render json: song
+        render json: poster
     end
 
 end

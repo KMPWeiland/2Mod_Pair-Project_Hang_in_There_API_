@@ -222,34 +222,42 @@
       },
       "/Users/kristinweiland/Turing/2mod/projects/hang_in_there_api/app/controllers/api/v1/posters_controller.rb": {
         "lines": [
+          1,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
           null,
           null,
           null,
+          1,
           null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
+          1,
+          0,
           null,
           null,
           null
         ]
+      },
+      "/Users/kristinweiland/Turing/2mod/projects/hang_in_there_api/app/controllers/application_controller.rb": {
+        "lines": [
+          1,
+          null
+        ]
       }
     },
-    "timestamp": 1734505934
+    "timestamp": 1734560287
   }
 }

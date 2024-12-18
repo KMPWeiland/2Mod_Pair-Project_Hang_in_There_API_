@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "Posters API", type: :request do
-  it 'fetches posters' do
+  it 'fetches all posters' do
     Poster.destroy_all
 
     @regret = Poster.create!(name: "REGRET",
@@ -61,18 +61,20 @@ describe "Posters API", type: :request do
 
 
   it "can get one poster by its id" do
-    id = @regret = Poster.create!(name: "REGRET",
-      description: "Hard work rarely pays off.",
-      price: 89.00,
-      year: 2018,
-      vintage: true,
-      img_url:  "https://plus.unsplash.com/premium_photo-1661293818249-fddbddf07a5d"
-    )
+    #setup
+    id = Poster.create!(name: "REGRET",
+    description: "Hard work rarely pays off.",
+    price: 89.00,
+    year: 2018,
+    vintage: true,
+    img_url:  "https://plus.unsplash.com/premium_photo-1661293818249-fddbddf07a5d").id
 
-    get "/api/v1/poster/#{id}"
+    #make a GET request to fetch the poster by ID
+    get "/api/v1/posters/#{id}"
   
+    #parse the JSON response
     # require "pry"; binding.pry
-    song = JSON.parse(response.body, symbolize_names: true)
+    poster = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_successful
   
@@ -91,5 +93,6 @@ describe "Posters API", type: :request do
     expect(poster).to have_key(:img_url)
     expect(poster[:img_url]).to be_a(String)
   end
+
 
 end

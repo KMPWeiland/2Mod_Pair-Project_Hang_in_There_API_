@@ -1,32 +1,32 @@
 require 'rails_helper'
 
 describe "Posters API", type: :request do
-    it 'fetches posters' do
-Poster.destroy_all
+  it 'fetches posters' do
+    Poster.destroy_all
 
-@regret = Poster.create!(name: "REGRET",
-  description: "Hard work rarely pays off.",
-  price: 89.00,
-  year: 2018,
-  vintage: true,
-  img_url:  "https://plus.unsplash.com/premium_photo-1661293818249-fddbddf07a5d"
-)
+    @regret = Poster.create!(name: "REGRET",
+      description: "Hard work rarely pays off.",
+      price: 89.00,
+      year: 2018,
+      vintage: true,
+      img_url:  "https://plus.unsplash.com/premium_photo-1661293818249-fddbddf07a5d"
+    )
 
-@failure = Poster.create!(name: "FAILURE",
-  description: "Why bother trying? It's probably not worth it.",
-  price: 68.00,
-  year: 2019,
-  vintage: true,
-  img_url: "https://images.unsplash.com/photo-1620401537439-98e94c004b0d"
-)
+    @failure = Poster.create!(name: "FAILURE",
+      description: "Why bother trying? It's probably not worth it.",
+      price: 68.00,
+      year: 2019,
+      vintage: true,
+      img_url: "https://images.unsplash.com/photo-1620401537439-98e94c004b0d"
+    )
 
-@mediocrity = Poster.create!(name: "MEDIOCRITY",
-  description: "Dreams are just that—dreams.",
-  price: 127.00,
-  year: 2021,
-  vintage: false,
-  img_url: "https://images.unsplash.com/photo-1551993005-75c4131b6bd8"
-)
+    @mediocrity = Poster.create!(name: "MEDIOCRITY",
+      description: "Dreams are just that—dreams.",
+      price: 127.00,
+      year: 2021,
+      vintage: false,
+      img_url: "https://images.unsplash.com/photo-1551993005-75c4131b6bd8"
+    )
 
 
     get '/api/v1/posters'
@@ -43,20 +43,53 @@ Poster.destroy_all
 
         expect(poster).to have_key(:name)
         expect(poster[:name]).to be_a(String)
+        
         expect(poster).to have_key(:description)
         expect(poster[:description]).to be_a(String)
+        
         expect(poster).to have_key(:price)
         expect(poster[:price]).to be_a(Float)
+        
         expect(poster).to have_key(:year)
         expect(poster[:year]).to be_a(Integer)
+
         expect(poster).to have_key(:img_url)
         expect(poster[:img_url]).to be_a(String)
 
     end
-    
-
-    # posters.each do |poster|
+  end
 
 
-    end
+  it "can get one poster by its id" do
+    id = @regret = Poster.create!(name: "REGRET",
+      description: "Hard work rarely pays off.",
+      price: 89.00,
+      year: 2018,
+      vintage: true,
+      img_url:  "https://plus.unsplash.com/premium_photo-1661293818249-fddbddf07a5d"
+    )
+
+    get "/api/v1/poster/#{id}"
+  
+    # require "pry"; binding.pry
+    song = JSON.parse(response.body, symbolize_names: true)
+
+    expect(response).to be_successful
+  
+    expect(poster).to have_key(:name)
+    expect(poster[:name]).to be_a(String)
+
+    expect(poster).to have_key(:description)
+    expect(poster[:description]).to be_a(String)
+
+    expect(poster).to have_key(:price)
+    expect(poster[:price]).to be_a(Float)
+
+    expect(poster).to have_key(:year)
+    expect(poster[:year]).to be_a(Integer)
+
+    expect(poster).to have_key(:img_url)
+    expect(poster[:img_url]).to be_a(String)
+  end
+
 end

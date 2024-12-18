@@ -26,7 +26,7 @@ Poster.create(name: "FAILURE",
   img_url: "https://images.unsplash.com/photo-1620401537439-98e94c004b0d",
 )
 
-Poster.create(name: "MEDIOCRITY"
+Poster.create(name: "MEDIOCRITY",
   description: "Dreams are just that—dreams.",
   price: 127.00,
   year: 2021,

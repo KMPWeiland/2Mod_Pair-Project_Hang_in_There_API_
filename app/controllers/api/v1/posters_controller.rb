@@ -8,4 +8,18 @@ class Api::V1::PostersController < ApplicationController
         render json: Poster.find(params[:id])
     end
 
+    def update
+        poster = Poster.find(params[:id])
+        if poster.update(poster_params)
+            render json: poster
+        else
+            render json: "error"
+    end
+
+    private
+
+    def poster_params
+        params.require(:poster).permit(:name, :description, :price, :year, :vintage, :img_url)
+    end
+
 end

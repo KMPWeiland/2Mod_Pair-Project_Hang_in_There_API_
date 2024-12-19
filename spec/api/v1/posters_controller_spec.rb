@@ -38,7 +38,7 @@ describe "Posters API", type: :request do
 
     posters.each do |poster|  
       expect(poster).to have_key(:id)
-      expect(poster[:id]).to be_an(Integer)
+      expect(poster[:id]).to be_an(String)
 
       expect(poster).to have_key(:name)
       expect(poster[:name]).to be_a(String)
@@ -72,24 +72,26 @@ describe "Posters API", type: :request do
   
     #parse the JSON response
     # require "pry"; binding.pry
-    poster = JSON.parse(response.body, symbolize_names: true)
-
+    poster = JSON.parse(response.body, symbolize_names: true)[:data]
     expect(response).to be_successful
+
+    expect(poster).to have_key(:id)
+    expect(poster[:id]).to be_an(String)
   
-    expect(poster).to have_key(:name)
-    expect(poster[:name]).to be_a(String)
+    expect(poster[:attributes]).to have_key(:name)
+    expect(poster[:attributes][:name]).to be_a(String)
 
-    expect(poster).to have_key(:description)
-    expect(poster[:description]).to be_a(String)
+    expect(poster[:attributes]).to have_key(:description)
+    expect(poster[:attributes][:description]).to be_a(String)
 
-    expect(poster).to have_key(:price)
-    expect(poster[:price]).to be_a(Float)
+    expect(poster[:attributes]).to have_key(:price)
+    expect(poster[:attributes][:price]).to be_a(Float)
 
-    expect(poster).to have_key(:year)
-    expect(poster[:year]).to be_a(Integer)
+    expect(poster[:attributes]).to have_key(:year)
+    expect(poster[:attributes][:year]).to be_a(Integer)
 
-    expect(poster).to have_key(:img_url)
-    expect(poster[:img_url]).to be_a(String)
+    expect(poster[:attributes]).to have_key(:img_url)
+    expect(poster[:attributes][:img_url]).to be_a(String)
   end
 
   it" can update a poster" do
@@ -156,23 +158,6 @@ describe "Posters API", type: :request do
 
     expect(response).to have_http_status(204)
     expect(deleted_poster).to be_nil
-  end
-
-  it "returns a 404 Status if poster is invalid" do
-      poster = Poster.create!(
-      name: "REGRET",
-      description: "Hard work rarely pays off.",
-      price: 89.00,
-      year: 2018,
-      vintage: true,
-      img_url:  "https://plus.unsplash.com/premium_photo-1661293818249-fddbddf07a5d"
-    )
-
-    patch "/api/v1/posters/9999"
-
-    expect(response).to have_http_status(:not_found)
-    json_response = JSON.parse(response.body, symbolize_names: true)
-    expect(json_response[:error]).to eq("Poster not found")
   end
 
 

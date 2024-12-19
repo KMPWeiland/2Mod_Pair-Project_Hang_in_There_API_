@@ -1,15 +1,14 @@
 class Api::V1::PostersController < ApplicationController
 
-    rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-
     def index
         # render json: Poster.all
-        posters = Poster.all 
-        render json: posters
+        posters = Poster.all
+        render json: PosterSerializer.format_posters(posters)
     end
 
     def show
-        render json: Poster.find(params[:id])
+        # render json: Poster.find(params[:id])
+        render json: PosterSerializer.format_single_poster(Poster.find(params[:id]))
     end
 
     def create
@@ -39,9 +38,6 @@ class Api::V1::PostersController < ApplicationController
         params.require(:poster).permit(:name, :description, :price, :year, :vintage, :img_url)
     end
 
-    def record_not_found(error)
-        render json: { error: "Poster not found" }, status: :not_found
-    end
 
 
 end

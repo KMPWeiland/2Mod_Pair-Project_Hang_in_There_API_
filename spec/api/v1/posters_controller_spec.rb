@@ -95,21 +95,20 @@ describe "Posters API", type: :request do
   end
 
   it "can update a poster" do
-    regret_poster = Poster.create!(name: "REGRET",
+    regret_poster = Poster.create!(
+    name: "REGRET",
     description: "Hard work rarely pays off.",
     price: 89.00,
     year: 2018,
     vintage: true,
     img_url:  "https://plus.unsplash.com/premium_photo-1661293818249-fddbddf07a5d")
-
-    id = regret_poster.id
-
-    previous_name = Poster.last.name
     
+    id = regret_poster.id
+    previous_name = Poster.last.name
     poster_params = { name: "PHONE IT IN" }
     headers = {"CONTENT_TYPE" => "application/json"}
 
-    patch "/api/v1/poster/#{id}", headers: headers, params: JSON.generate({posters: poster_params})
+    patch "/api/v1/posters/#{id}", headers: headers, params: JSON.generate({poster: poster_params})
 
     poster = Poster.find_by(id: id)
 

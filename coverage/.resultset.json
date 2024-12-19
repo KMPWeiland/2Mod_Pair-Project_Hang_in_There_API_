@@ -1,51 +1,209 @@
 {
   "RSpec": {
     "coverage": {
-      "/Users/kristinweiland/Turing/2mod/projects/hang_in_there_api/app/controllers/api/v1/posters_controller.rb": {
+      "/Users/kristinweiland/Turing/2mod/projects/hang_in_there_api/config/environment.rb": {
+        "lines": [
+          null,
+          1,
+          null,
+          null,
+          1
+        ]
+      },
+      "/Users/kristinweiland/Turing/2mod/projects/hang_in_there_api/config/application.rb": {
         "lines": [
           1,
           null,
           1,
-          1,
-          null,
           null,
           1,
-          0,
-          null,
-          null,
           1,
-          0,
-          0,
-          null,
-          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
           1,
           null,
-          1,
-          0,
-          0,
-          null,
-          0,
-          null,
-          null,
-          null,
-          1,
-          0,
           null,
           null,
           null,
           1,
           null,
           1,
-          0,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/kristinweiland/Turing/2mod/projects/hang_in_there_api/config/boot.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1
+        ]
+      },
+      "/Users/kristinweiland/Turing/2mod/projects/hang_in_there_api/config/environments/test.rb": {
+        "lines": [
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null
+        ]
+      },
+      "/Users/kristinweiland/Turing/2mod/projects/hang_in_there_api/config/initializers/cors.rb": {
+        "lines": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
           null,
           null,
           null,
           null
         ]
       },
-      "/Users/kristinweiland/Turing/2mod/projects/hang_in_there_api/app/controllers/application_controller.rb": {
+      "/Users/kristinweiland/Turing/2mod/projects/hang_in_there_api/config/initializers/filter_parameter_logging.rb": {
+        "lines": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/kristinweiland/Turing/2mod/projects/hang_in_there_api/config/initializers/inflections.rb": {
+        "lines": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/kristinweiland/Turing/2mod/projects/hang_in_there_api/config/routes.rb": {
         "lines": [
           1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
           null
         ]
       },
@@ -63,50 +221,64 @@
           null
         ]
       },
-      "/Users/kristinweiland/Turing/2mod/projects/hang_in_there_api/app/channels/application_cable/channel.rb": {
+      "/Users/kristinweiland/Turing/2mod/projects/hang_in_there_api/app/controllers/api/v1/posters_controller.rb": {
         "lines": [
+          1,
+          null,
+          1,
+          null,
+          1,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          null,
+          2,
+          1,
+          1,
+          null,
           0,
           0,
-          0,
-          0
-        ],
-        "branches": {
-        }
+          null,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          2,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null
+        ]
       },
-      "/Users/kristinweiland/Turing/2mod/projects/hang_in_there_api/app/channels/application_cable/connection.rb": {
+      "/Users/kristinweiland/Turing/2mod/projects/hang_in_there_api/app/controllers/application_controller.rb": {
         "lines": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/Users/kristinweiland/Turing/2mod/projects/hang_in_there_api/app/jobs/application_job.rb": {
-        "lines": [
-          0,
-          null,
-          null,
-          null,
-          null,
-          null,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/Users/kristinweiland/Turing/2mod/projects/hang_in_there_api/app/mailers/application_mailer.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
+          1,
+          null
+        ]
       }
     },
-    "timestamp": 1734576099
+    "timestamp": 1734592196
   }
 }

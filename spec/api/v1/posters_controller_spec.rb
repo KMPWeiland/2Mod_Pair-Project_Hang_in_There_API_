@@ -31,7 +31,9 @@ describe "Posters API", type: :request do
     get '/api/v1/posters'
 
     expect(response).to be_successful
+
     posters = JSON.parse(response.body, symbolize_names: true)
+
     expect(posters.count).to eq(3)
 
     posters.each do |poster|  
@@ -149,15 +151,29 @@ describe "Posters API", type: :request do
   
     #parse the JSON response
     poster = JSON.parse(response.body, symbolize_names: true)
+    # puts poster
+    deleted_poster = Poster.find_by(id: id)
 
-    expect(response).to be_successful
-  
-    expect(poster).to be_falsey
-    expect(poster[:name]).to be_nil
-    expect(poster[:description]).to be_nil
-    expect(poster[:price]).to be_nil
-    expect(poster[:year]).to be_nil
-    expect(poster[:img_url]).to be_nil
+    expect(response).to have_http_status(204)
+    expect(deleted_poster).to be_nil
   end
+
+  it "returns a 404 Status if poster is invalid" do
+      poster = Poster.create!(
+      name: "REGRET",
+      description: "Hard work rarely pays off.",
+      price: 89.00,
+      year: 2018,
+      vintage: true,
+      img_url:  "https://plus.unsplash.com/premium_photo-1661293818249-fddbddf07a5d"
+    )
+
+    patch "/api/v1/posters/9999"
+
+    expect(response).to have_http_status(:not_found)
+    json_response = JSON.parse(response.body, symbolize_names: true)
+    expect(json_response[:error]).to eq("Poster not found")
+  end
+
 
 end

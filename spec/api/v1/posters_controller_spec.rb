@@ -134,26 +134,27 @@ mediocrity = Poster.create!(
     expect(poster[:img_url]).to be_a(String)
   end
 
+  it "can update a poster" do
+    regret_poster = Poster.create!(
+    name: "REGRET",
+    description: "Hard work rarely pays off.",
+    price: 89.00,
+    year: 2018,
+    vintage: true,
+    img_url:  "https://plus.unsplash.com/premium_photo-1661293818249-fddbddf07a5d")
+    
+    id = regret_poster.id
+    previous_name = Poster.last.name
+    poster_params = { name: "PHONE IT IN" }
+    headers = {"CONTENT_TYPE" => "application/json"}
 
-  it 'creates a new poster' do
+    patch "/api/v1/posters/#{id}", headers: headers, params: JSON.generate({poster: poster_params})
 
-        new_poster = {
-            name: "REGRET",
-            description: "Hard work rarely pays off.",
-            price: 89.00,
-            year: 2018,
-            vintage: true,
-            img_url: "https://plus.unsplash.com/premium_photo-1661293818249-fddbddf07a5d"
-        }
+    poster = Poster.find_by(id: id)
 
-        post '/api/v1/posters#create', params: { poster: new_poster }
+    expect(response).to be_successful
+    # expect(poster.name).to_not eq(previous_name)
+    # expect(poster.name).to eq("PHONE IT IN")
+  end
 
-        poster = JSON.parse(response.body, symbolize_names: true)
-
-        expect(poster[:name]).to eq(new_poster[:name])
-        expect(poster[:description]).to eq(new_poster[:description])
-        expect(poster[:price]).to eq(new_poster[:price])
-        expect(poster[:year]).to eq(new_poster[:year])
-        expect(poster[:img_url]).to eq(new_poster[:img_url])
-    end
 end

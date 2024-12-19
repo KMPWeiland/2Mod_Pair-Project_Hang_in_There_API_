@@ -5,8 +5,23 @@ class Api::V1::PostersController < ApplicationController
     end
 
     def show
+        render json: Poster.find(params[:id])
+    end
+
+    def update
+        # render json: Poster.update(params[:id], poster_params)
         poster = Poster.find(params[:id])
-        render json: poster
+        if poster.update(poster_params)
+            render json: poster
+        else
+            render json: { error: "poster not found" }, status: :not_found
+        end
+    end
+
+    private
+
+    def poster_params
+        params.require(:poster).permit(:name, :description, :price, :year, :vintage, :img_url)
     end
 
     

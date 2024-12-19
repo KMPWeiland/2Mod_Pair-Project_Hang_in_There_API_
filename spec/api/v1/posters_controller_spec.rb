@@ -140,4 +140,21 @@ describe "Posters API", type: :request do
     expect(poster[:img_url]).to eq(new_poster[:img_url])
   end
 
+  it "returns a 404 Status if poster is invalid" do
+    poster = Poster.create!(
+    name: "REGRET",
+    description: "Hard work rarely pays off.",
+    price: 89.00,
+    year: 2018,
+    vintage: true,
+    img_url:  "https://plus.unsplash.com/premium_photo-1661293818249-fddbddf07a5d"
+  )
+
+  patch "/api/v1/posters/9999"
+
+  expect(response).to have_http_status(:not_found)
+  json_response = JSON.parse(response.body, symbolize_names: true)
+  expect(json_response[:error]).to eq("Poster not found")
+
+  end
 end

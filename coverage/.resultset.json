@@ -223,10 +223,7 @@
       "/Users/nvnatasha/turing_work/2mod.2/2Mod_Pair-Project_Hang_in_There_API_/app/controllers/api/v1/posters_controller.rb": {
         "lines": [
           1,
-          null,
           1,
-          1,
-          null,
           null,
           1,
           1,
@@ -234,12 +231,16 @@
           null,
           1,
           1,
+          null,
+          null,
+          1,
+          1,
           1,
           null,
           null,
           1,
           null,
-          1,
+          2,
           1,
           1,
           null,
@@ -253,6 +254,10 @@
           2,
           null,
           null,
+          1,
+          1,
+          null,
+          null,
           null
         ]
       },
@@ -263,6 +268,6 @@
         ]
       }
     },
-    "timestamp": 1734567856
+    "timestamp": 1734572172
   }
 }

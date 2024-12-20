@@ -1,15 +1,39 @@
 class Api::V1::PostersController < ApplicationController
 
-    rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-
     def index
-        # render json: Poster.all
-        posters = Poster.all 
-        render json: posters
+         #base query
+         posters = Poster.all
+         
+        #sorting logic
+        if params[:sort] == 'desc'
+            sort_order = :desc 
+        else
+            sort_order = :asc 
+        end
+
+        #filtering logic
+        if params[:name]
+            posters = posters.where("lower(name) LIKE ?", "%#{params[:name].downcase}%").order(:name)
+        end
+
+        if params[:max_price]
+            posters = posters.where("price <= ?", params[:max_price])
+        end
+        
+        if params[:min_price]
+            posters = posters.where("price >= ?", params[:min_price])
+        end
+        
+        #apply sorting 
+        posters = posters.order(created_at: sort_order)
+
+        #format json response 
+        render json: PosterSerializer.format_posters(posters)
     end
 
     def show
-        render json: Poster.find(params[:id])
+        # render json: Poster.find(params[:id])
+        render json: PosterSerializer.format_single_poster(Poster.find(params[:id]))
     end
 
     def create
@@ -39,9 +63,6 @@ class Api::V1::PostersController < ApplicationController
         params.require(:poster).permit(:name, :description, :price, :year, :vintage, :img_url)
     end
 
-    def record_not_found(error)
-        render json: { error: "Poster not found" }, status: :not_found
-    end
 
 
 end

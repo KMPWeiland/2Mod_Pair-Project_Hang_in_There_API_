@@ -56,7 +56,9 @@ class Api::V1::PostersController < ApplicationController
     end
 
     def destroy
-        render json: Poster.delete(params[:id])
+        poster = Poster.find(params[:id])
+        poster.destroy
+        head :no_content
     end
 
 

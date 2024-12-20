@@ -156,12 +156,9 @@ describe "Posters API", type: :request do
     #make a GET request to fetch the poster by ID
     delete "/api/v1/posters/#{id}"
   
-    #parse the JSON response
-    poster = JSON.parse(response.body, symbolize_names: true)
-    # puts poster
     deleted_poster = Poster.find_by(id: id)
 
-    expect(response).to have_http_status(200)
+    expect(response).to have_http_status(204)
     expect(deleted_poster).to be_nil
   end
 

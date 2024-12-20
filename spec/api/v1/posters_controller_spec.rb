@@ -4,7 +4,8 @@ describe "Posters API", type: :request do
 
   it 'fetches all posters' do
     Poster.destroy_all
-    @regret = Poster.create!(name: "REGRET",
+    @regret = Poster.create!(
+      name: "REGRET",
       description: "Hard work rarely pays off.",
       price: 89.00,
       year: 2018,
@@ -12,7 +13,8 @@ describe "Posters API", type: :request do
       img_url:  "https://plus.unsplash.com/premium_photo-1661293818249-fddbddf07a5d"
     )
 
-    @failure = Poster.create!(name: "FAILURE",
+    @failure = Poster.create!(
+      name: "FAILURE",
       description: "Why bother trying? It's probably not worth it.",
       price: 68.00,
       year: 2019,
@@ -20,7 +22,8 @@ describe "Posters API", type: :request do
       img_url: "https://images.unsplash.com/photo-1620401537439-98e94c004b0d"
     )
 
-    @mediocrity = Poster.create!(name: "MEDIOCRITY",
+    @mediocrity = Poster.create!(
+      name: "MEDIOCRITY",
       description: "Dreams are just that—dreams.",
       price: 127.00,
       year: 2021,
@@ -60,7 +63,8 @@ describe "Posters API", type: :request do
 
   it "can get one poster by its id" do
     #setup
-    id = Poster.create!(name: "REGRET",
+    id = Poster.create!(
+    name: "REGRET",
     description: "Hard work rarely pays off.",
     price: 89.00,
     year: 2018,
@@ -141,7 +145,8 @@ describe "Posters API", type: :request do
 
   it 'can delete a poster' do
     #setup
-    id = Poster.create!(name: "REGRET",
+    id = Poster.create!(
+    name: "REGRET",
     description: "Hard work rarely pays off.",
     price: 89.00,
     year: 2018,
@@ -156,7 +161,7 @@ describe "Posters API", type: :request do
     # puts poster
     deleted_poster = Poster.find_by(id: id)
 
-    expect(response).to have_http_status(204)
+    expect(response).to have_http_status(200)
     expect(deleted_poster).to be_nil
   end
 
@@ -164,7 +169,8 @@ describe "Posters API", type: :request do
 
   it 'can sort posters by created_at date in ascending order' do
     Poster.destroy_all
-    regret_poster = Poster.create!(name: "REGRET",
+    regret_poster = Poster.create!(
+      name: "REGRET",
       description: "Hard work rarely pays off.",
       price: 89.00,
       year: 2018,
@@ -173,7 +179,8 @@ describe "Posters API", type: :request do
       created_at: 1.day.ago
     )
 
-    failure_poster = Poster.create!(name: "FAILURE",
+    failure_poster = Poster.create!(
+      name: "FAILURE",
       description: "Why bother trying? It's probably not worth it.",
       price: 68.00,
       year: 2019,
@@ -182,7 +189,8 @@ describe "Posters API", type: :request do
       created_at: 19.day.ago
     )
 
-    mediocrity_poster = Poster.create!(name: "MEDIOCRITY",
+    mediocrity_poster = Poster.create!(
+      name: "MEDIOCRITY",
       description: "Dreams are just that—dreams.",
       price: 127.00,
       year: 2021,

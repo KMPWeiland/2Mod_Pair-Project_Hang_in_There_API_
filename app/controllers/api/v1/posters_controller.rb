@@ -1,6 +1,9 @@
 class Api::V1::PostersController < ApplicationController
 
     def index
+         #base query
+         posters = Poster.all
+         
         #sorting logic
         if params[:sort] == 'desc'
             sort_order = :desc 
@@ -8,15 +11,16 @@ class Api::V1::PostersController < ApplicationController
             sort_order = :asc 
         end
 
-        #base query
-        posters = Poster.all
-
         #filtering logic
         if params[:name]
             posters = posters.where("lower(name) LIKE ?", "%#{params[:name].downcase}%").order(:name)
-        elsif params[:max_price]
+        end
+
+        if params[:max_price]
             posters = posters.where("price <= ?", params[:max_price])
-        elsif params[:min_price]
+        end
+        
+        if params[:min_price]
             posters = posters.where("price >= ?", params[:min_price])
         end
         

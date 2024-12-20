@@ -1,34 +1,37 @@
 class Api::V1::PostersController < ApplicationController
 
     def index
-         #base query
-         posters = Poster.all
-         
-        #sorting logic
-        if params[:sort] == 'desc'
-            sort_order = :desc 
-        else
-            sort_order = :asc 
-        end
-
+        #base query
+        posters = Poster.all
         #filtering logic
-        if params[:name]
+        if params[:name].present?
             posters = posters.where("lower(name) LIKE ?", "%#{params[:name].downcase}%").order(:name)
         end
 
-        if params[:max_price]
+        if params[:max_price].present?
             posters = posters.where("price <= ?", params[:max_price])
         end
         
-        if params[:min_price]
+        if params[:min_price].present?
             posters = posters.where("price >= ?", params[:min_price])
         end
         
+        #sorting logic
+        if params[:sort] == 'asc'
+            sort_asc = posters.order(:created_at)
+            render json: PosterSerializer.format_posters(sort_asc)
+        elsif params[:sort] == 'desc'
+            sort_desc = posters.order(created_at: :desc) 
+            render json: PosterSerializer.format_posters(sort_desc)
+        else
+            render json: PosterSerializer.format_posters(posters)
+        end
+
         #apply sorting 
-        posters = posters.order(created_at: sort_order)
+        # posters = posters.order(created_at: sort_order)
 
         #format json response 
-        render json: PosterSerializer.format_posters(posters)
+        # render json: PosterSerializer.format_posters(posters)
     end
 
     def show

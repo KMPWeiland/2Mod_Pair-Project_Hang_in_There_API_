@@ -2,8 +2,19 @@ class Api::V1::PostersController < ApplicationController
 
     def index
         # render json: Poster.all
-        posters = Poster.all
+        if params[:sort] == 'desc'
+            sort_order = :desc 
+        else
+            sort_order = :asc 
+        end
+        
+        posters = Poster.order(created_at: sort_order)
         render json: PosterSerializer.format_posters(posters)
+        #do conditional checking to see if the param exist via query params = application/biz logic
+        #after verifying that this key exists, then what has to be achieved to that data should be 
+        #abstracted to the model 
+
+
     end
 
     def show

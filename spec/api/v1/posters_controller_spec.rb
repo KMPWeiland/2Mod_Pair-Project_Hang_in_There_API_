@@ -34,26 +34,26 @@ describe "Posters API", type: :request do
 
     posters = JSON.parse(response.body, symbolize_names: true)
 
-    expect(posters.count).to eq(3)
+    expect(posters[:data].count).to eq(3)
 
-    posters.each do |poster|  
+    posters[:data].each do |poster|  
       expect(poster).to have_key(:id)
       expect(poster[:id]).to be_an(String)
 
-      expect(poster).to have_key(:name)
-      expect(poster[:name]).to be_a(String)
+      expect(poster[:attributes]).to have_key(:name)
+      expect(poster[:attributes][:name]).to be_a(String)
           
-      expect(poster).to have_key(:description)
-      expect(poster[:description]).to be_a(String)
+      expect(poster[:attributes]).to have_key(:description)
+      expect(poster[:attributes][:description]).to be_a(String)
           
-      expect(poster).to have_key(:price)
-      expect(poster[:price]).to be_a(Float)
+      expect(poster[:attributes]).to have_key(:price)
+      expect(poster[:attributes][:price]).to be_a(Float)
           
-      expect(poster).to have_key(:year)
-      expect(poster[:year]).to be_a(Integer)
+      expect(poster[:attributes]).to have_key(:year)
+      expect(poster[:attributes][:year]).to be_a(Integer)
 
-      expect(poster).to have_key(:img_url)
-      expect(poster[:img_url]).to be_a(String)
+      expect(poster[:attributes]).to have_key(:img_url)
+      expect(poster[:attributes][:img_url]).to be_a(String)
     end
   end
 
@@ -159,6 +159,83 @@ describe "Posters API", type: :request do
     expect(response).to have_http_status(204)
     expect(deleted_poster).to be_nil
   end
+
+  #don't forget to test all the endpoints for all query params
+
+  it 'can sort posters by created_at date in ascending order' do
+    Poster.destroy_all
+    regret_poster = Poster.create!(name: "REGRET",
+      description: "Hard work rarely pays off.",
+      price: 89.00,
+      year: 2018,
+      vintage: true,
+      img_url:  "https://plus.unsplash.com/premium_photo-1661293818249-fddbddf07a5d",
+      created_at: 1.day.ago
+    )
+
+    failure_poster = Poster.create!(name: "FAILURE",
+      description: "Why bother trying? It's probably not worth it.",
+      price: 68.00,
+      year: 2019,
+      vintage: true,
+      img_url: "https://images.unsplash.com/photo-1620401537439-98e94c004b0d",
+      created_at: 19.day.ago
+    )
+
+    mediocrity_poster = Poster.create!(name: "MEDIOCRITY",
+      description: "Dreams are just that—dreams.",
+      price: 127.00,
+      year: 2021,
+      vintage: false,
+      img_url: "https://images.unsplash.com/photo-1551993005-75c4131b6bd8",
+      created_at: 5.day.ago
+    )
+
+    get '/api/v1/posters?sort=asc'
+    posters = JSON.parse(response.body, symbolize_names: true)
+
+    poster_names = posters[:data].map {|poster| poster[:attributes][:name]}
+    expect(poster_names).to eq([failure_poster.name, mediocrity_poster.name, regret_poster.name])
+  end
+
+  it 'can sort posters by created_at date in descending order' do
+    Poster.destroy_all
+    regret_poster = Poster.create!(name: "REGRET",
+      description: "Hard work rarely pays off.",
+      price: 89.00,
+      year: 2018,
+      vintage: true,
+      img_url:  "https://plus.unsplash.com/premium_photo-1661293818249-fddbddf07a5d",
+      created_at: 1.day.ago
+    )
+
+    failure_poster = Poster.create!(name: "FAILURE",
+      description: "Why bother trying? It's probably not worth it.",
+      price: 68.00,
+      year: 2019,
+      vintage: true,
+      img_url: "https://images.unsplash.com/photo-1620401537439-98e94c004b0d",
+      created_at: 19.day.ago
+    )
+
+    mediocrity_poster = Poster.create!(name: "MEDIOCRITY",
+      description: "Dreams are just that—dreams.",
+      price: 127.00,
+      year: 2021,
+      vintage: false,
+      img_url: "https://images.unsplash.com/photo-1551993005-75c4131b6bd8",
+      created_at: 5.day.ago
+    )
+
+    get '/api/v1/posters?sort=desc'
+    posters = JSON.parse(response.body, symbolize_names: true)
+
+    poster_names = posters[:data].map {|poster| poster[:attributes][:name]}
+    expect(poster_names).to eq([regret_poster.name, mediocrity_poster.name, failure_poster.name])
+  end
+
+
+
 
 
 end

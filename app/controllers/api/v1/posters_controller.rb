@@ -1,20 +1,30 @@
 class Api::V1::PostersController < ApplicationController
 
     def index
-        # render json: Poster.all
+        #sorting logic
         if params[:sort] == 'desc'
             sort_order = :desc 
         else
             sort_order = :asc 
         end
+
+        #base query
+        posters = Poster.all
+
+        #filtering logic
+        if params[:name]
+            posters = posters.where("lower(name) LIKE ?", "%#{params[:name].downcase}%").order(:name)
+        elsif params[:max_price]
+            posters = posters.where("price <= ?", params[:max_price])
+        elsif params[:min_price]
+            posters = posters.where("price >= ?", params[:min_price])
+        end
         
-        posters = Poster.order(created_at: sort_order)
+        #apply sorting 
+        posters = posters.order(created_at: sort_order)
+
+        #format json response 
         render json: PosterSerializer.format_posters(posters)
-        #do conditional checking to see if the param exist via query params = application/biz logic
-        #after verifying that this key exists, then what has to be achieved to that data should be 
-        #abstracted to the model 
-
-
     end
 
     def show

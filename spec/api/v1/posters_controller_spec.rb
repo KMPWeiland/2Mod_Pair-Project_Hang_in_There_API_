@@ -113,8 +113,8 @@ describe "Posters API", type: :request do
     poster = Poster.find_by(id: id)
 
     expect(response).to be_successful
-    # expect(poster.name).to_not eq(previous_name)
-    # expect(poster.name).to eq("PHONE IT IN")
+    expect(poster.name).to_not eq(previous_name)
+    expect(poster.name).to eq("PHONE IT IN")
   end
 
   it 'can create a poster' do
@@ -233,6 +233,37 @@ describe "Posters API", type: :request do
     poster_names = posters[:data].map {|poster| poster[:attributes][:name]}
     expect(poster_names).to eq([regret_poster.name, mediocrity_poster.name, failure_poster.name])
   end
+
+
+  it 'filter results based on name' do
+    Poster.destroy_all
+    regret_poster = Poster.create!(name: "DISASTER",
+      description: "It's a mess and you haven't even started yet.",
+      price: 28.00,
+      year: 2016,
+      vintage: false,
+      img_url:  "https://images.unsplash.com/photo-1485617359743-4dc5d2e53c89",
+    )
+
+    failure_poster = Poster.create!(name: "TERRIBLE",
+      description: "It's too awful to look at.",
+      price: 15.00,
+      year: 2022,
+      vintage: true,
+      img_url: "https://unsplash.com/photos/low-angle-of-hacker-installing-malicious-software-on-data-center-servers-using-laptop-9nk2antk4Bw"
+    )
+
+    get '/api/v1/posters?name=ter'
+
+    posters = JSON.parse(response.body, symbolize_names: true)
+
+    posters[:data].each do |poster|
+      expect(poster[:attributes][:name].downcase).to include("ter")
+    end
+  end
+
+
+  
 
 
 

@@ -235,9 +235,9 @@ describe "Posters API", type: :request do
   end
 
 
-  it 'filter results based on name' do
+  it 'can filter results based on name' do
     Poster.destroy_all
-    regret_poster = Poster.create!(name: "DISASTER",
+    disaster_poster = Poster.create!(name: "DISASTER",
       description: "It's a mess and you haven't even started yet.",
       price: 28.00,
       year: 2016,
@@ -245,7 +245,7 @@ describe "Posters API", type: :request do
       img_url:  "https://images.unsplash.com/photo-1485617359743-4dc5d2e53c89",
     )
 
-    failure_poster = Poster.create!(name: "TERRIBLE",
+    terrible_poster = Poster.create!(name: "TERRIBLE",
       description: "It's too awful to look at.",
       price: 15.00,
       year: 2022,
@@ -259,6 +259,78 @@ describe "Posters API", type: :request do
 
     posters[:data].each do |poster|
       expect(poster[:attributes][:name].downcase).to include("ter")
+    end
+  end
+
+  it 'can filter results based on max price' do
+    Poster.destroy_all
+    disaster_poster = Poster.create!(name: "DISASTER",
+      description: "It's a mess and you haven't even started yet.",
+      price: 28.00,
+      year: 2016,
+      vintage: false,
+      img_url:  "https://images.unsplash.com/photo-1485617359743-4dc5d2e53c89",
+    )
+
+    terrible_poster = Poster.create!(name: "TERRIBLE",
+      description: "It's too awful to look at.",
+      price: 15.00,
+      year: 2022,
+      vintage: true,
+      img_url: "https://unsplash.com/photos/low-angle-of-hacker-installing-malicious-software-on-data-center-servers-using-laptop-9nk2antk4Bw"
+    )
+
+    mediocrity_poster = Poster.create!(name: "MEDIOCRITY",
+    description: "Dreams are just that—dreams.",
+    price: 19.00,
+    year: 2021,
+    vintage: false,
+    img_url: "https://images.unsplash.com/photo-1551993005-75c4131b6bd8",
+    created_at: 5.day.ago
+  )
+
+    get '/api/v1/posters?max_price=20.00'
+
+    posters = JSON.parse(response.body, symbolize_names: true)
+
+    posters[:data].each do |poster|
+      expect(poster[:attributes][:price].to_f).to be <= 20.00
+    end
+  end
+
+  it 'can filter results based on min price' do
+    Poster.destroy_all
+    disaster_poster = Poster.create!(name: "DISASTER",
+      description: "It's a mess and you haven't even started yet.",
+      price: 28.00,
+      year: 2016,
+      vintage: false,
+      img_url:  "https://images.unsplash.com/photo-1485617359743-4dc5d2e53c89",
+    )
+
+    terrible_poster = Poster.create!(name: "TERRIBLE",
+      description: "It's too awful to look at.",
+      price: 15.00,
+      year: 2022,
+      vintage: true,
+      img_url: "https://unsplash.com/photos/low-angle-of-hacker-installing-malicious-software-on-data-center-servers-using-laptop-9nk2antk4Bw"
+    )
+
+    mediocrity_poster = Poster.create!(name: "MEDIOCRITY",
+    description: "Dreams are just that—dreams.",
+    price: 19.00,
+    year: 2021,
+    vintage: false,
+    img_url: "https://images.unsplash.com/photo-1551993005-75c4131b6bd8",
+    created_at: 5.day.ago
+  )
+
+    get '/api/v1/posters?min_price=2000.00'
+
+    posters = JSON.parse(response.body, symbolize_names: true)
+
+    posters[:data].each do |poster|
+      expect(poster[:attributes][:price].to_f).to be >= 2000.00
     end
   end
 

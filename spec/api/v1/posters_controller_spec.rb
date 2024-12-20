@@ -123,17 +123,17 @@ describe "Posters API", type: :request do
 
   it 'can create a poster' do
     new_poster = {
-      "name": "DEFEAT",
-      "description": "It's too late to start now.",
-      "price": 35.00,
-      "year": 2023,
-      "vintage": false,
-      "img_url":  "https://unsplash.com/photos/brown-brick-building-with-red-car-parked-on-the-side-mMV6Y0ExyIk" 
+    name: "DEFEAT",
+    description: "It's too late to start now.",
+    price: 35.00,
+    year: 2023,
+    vintage: false,
+    img_url: "https://unsplash.com/photos/brown-brick-building-with-red-car-parked-on-the-side-mMV6Y0ExyIk"
     }
 
-    post '/api/v1/posters#create', params: { poster: new_poster }
+    post '/api/v1/posters', params: { poster: new_poster }
 
-    poster = JSON.parse(response.body, symbolize_names: true)
+    poster = JSON.parse(response.body, symbolize_names: true)[:data][:attributes]
 
     expect(poster[:name]).to eq(new_poster[:name])
     expect(poster[:description]).to eq(new_poster[:description])
@@ -205,7 +205,8 @@ describe "Posters API", type: :request do
 
   it 'can sort posters by created_at date in descending order' do
     Poster.destroy_all
-    regret_poster = Poster.create!(name: "REGRET",
+    regret_poster = Poster.create!(
+      name: "REGRET",
       description: "Hard work rarely pays off.",
       price: 89.00,
       year: 2018,
@@ -214,7 +215,8 @@ describe "Posters API", type: :request do
       created_at: 1.day.ago
     )
 
-    failure_poster = Poster.create!(name: "FAILURE",
+    failure_poster = Poster.create!(
+      name: "FAILURE",
       description: "Why bother trying? It's probably not worth it.",
       price: 68.00,
       year: 2019,
@@ -223,7 +225,8 @@ describe "Posters API", type: :request do
       created_at: 19.day.ago
     )
 
-    mediocrity_poster = Poster.create!(name: "MEDIOCRITY",
+    mediocrity_poster = Poster.create!(
+      name: "MEDIOCRITY",
       description: "Dreams are just that—dreams.",
       price: 127.00,
       year: 2021,
@@ -242,7 +245,8 @@ describe "Posters API", type: :request do
 
   it 'can filter results based on name' do
     Poster.destroy_all
-    disaster_poster = Poster.create!(name: "DISASTER",
+    disaster_poster = Poster.create!(
+      name: "DISASTER",
       description: "It's a mess and you haven't even started yet.",
       price: 28.00,
       year: 2016,
@@ -250,7 +254,8 @@ describe "Posters API", type: :request do
       img_url:  "https://images.unsplash.com/photo-1485617359743-4dc5d2e53c89",
     )
 
-    terrible_poster = Poster.create!(name: "TERRIBLE",
+    terrible_poster = Poster.create!(
+      name: "TERRIBLE",
       description: "It's too awful to look at.",
       price: 15.00,
       year: 2022,
@@ -269,7 +274,8 @@ describe "Posters API", type: :request do
 
   it 'can filter results based on max price' do
     Poster.destroy_all
-    disaster_poster = Poster.create!(name: "DISASTER",
+    disaster_poster = Poster.create!(
+      name: "DISASTER",
       description: "It's a mess and you haven't even started yet.",
       price: 28.00,
       year: 2016,
@@ -277,7 +283,8 @@ describe "Posters API", type: :request do
       img_url:  "https://images.unsplash.com/photo-1485617359743-4dc5d2e53c89",
     )
 
-    terrible_poster = Poster.create!(name: "TERRIBLE",
+    terrible_poster = Poster.create!(
+      name: "TERRIBLE",
       description: "It's too awful to look at.",
       price: 15.00,
       year: 2022,
@@ -285,7 +292,8 @@ describe "Posters API", type: :request do
       img_url: "https://unsplash.com/photos/low-angle-of-hacker-installing-malicious-software-on-data-center-servers-using-laptop-9nk2antk4Bw"
     )
 
-    mediocrity_poster = Poster.create!(name: "MEDIOCRITY",
+    mediocrity_poster = Poster.create!(
+    name: "MEDIOCRITY",
     description: "Dreams are just that—dreams.",
     price: 19.00,
     year: 2021,
@@ -305,7 +313,8 @@ describe "Posters API", type: :request do
 
   it 'can filter results based on min price' do
     Poster.destroy_all
-    disaster_poster = Poster.create!(name: "DISASTER",
+    disaster_poster = Poster.create!(
+      name: "DISASTER",
       description: "It's a mess and you haven't even started yet.",
       price: 28.00,
       year: 2016,
@@ -313,7 +322,8 @@ describe "Posters API", type: :request do
       img_url:  "https://images.unsplash.com/photo-1485617359743-4dc5d2e53c89",
     )
 
-    terrible_poster = Poster.create!(name: "TERRIBLE",
+    terrible_poster = Poster.create!(
+      name: "TERRIBLE",
       description: "It's too awful to look at.",
       price: 15.00,
       year: 2022,
@@ -321,7 +331,8 @@ describe "Posters API", type: :request do
       img_url: "https://unsplash.com/photos/low-angle-of-hacker-installing-malicious-software-on-data-center-servers-using-laptop-9nk2antk4Bw"
     )
 
-    mediocrity_poster = Poster.create!(name: "MEDIOCRITY",
+    mediocrity_poster = Poster.create!(
+    name: "MEDIOCRITY",
     description: "Dreams are just that—dreams.",
     price: 19.00,
     year: 2021,
@@ -339,11 +350,74 @@ describe "Posters API", type: :request do
     end
   end
 
+  it 'returns 422 and error messages when creating without a name' do
+    poster_params = {
+        poster: { 
+        description: nil,
+        price: nil,
+        year: nil,
+        vintage: nil,
+        img_url: nil
+      }
+    }
 
-  
+    post '/api/v1/posters', params: poster_params
 
+    expect(response).to have_http_status(:unprocessable_entity)
+    data = JSON.parse(response.body, symbolize_names: true)
+    expect(data[:errors]).to include(
+      { message: "Name can't be blank", status: "422" }
+    )
+    expect(data[:errors]).to include(
+      { message: "Description can't be blank", status: "422" }
+    )
+  end 
 
+  it 'when name is blank when updating, returns 422 with an error message' do
+    poster = Poster.create!(
+      name: "MEDIOCRITY",
+      description: "Dreams are just that—dreams.",
+      price: 19.00,
+      year: 2021,
+      vintage: false,
+      img_url: "https://images.unsplash.com/photo-1551993005-75c4131b6bd8",
+      created_at: 5.day.ago
+    )
 
+    update_params = {
+        poster: {
+          name: ''
+        }
+      }
 
+    patch "/api/v1/posters/#{poster.id}", params: update_params
 
+      expect(response).to have_http_status(:unprocessable_entity)
+      data = JSON.parse(response.body, symbolize_names: true)
+      expect(data[:errors][0][:message]).to eq('Name cannot be blank.')
+    end
+
+    it 'returns 404 with an error message when trying to update a poster that does not exist' do
+      patch '/api/v1/posters/9999', params: { poster: { name: 'Nonexistent' } }
+
+      expect(response).to have_http_status(:not_found)
+      data = JSON.parse(response.body, symbolize_names: true)
+      expect(data[:errors][0][:message]).to eq('Poster not found')
+    end
+
+    it 'returns 404 with an error message when trying to update a poster that does not exist' do
+      delete '/api/v1/posters/9999'
+
+      expect(response).to have_http_status(:not_found)
+      data = JSON.parse(response.body, symbolize_names: true)
+      expect(data[:errors][0][:message]).to eq('Poster not found')
+    end
+
+    it 'returns 404 with an error message when trying to delete a poster that does not exist' do
+      delete '/api/v1/posters/9999', params: { poster: { name: 'Nonexistent' } }
+
+      expect(response).to have_http_status(:not_found)
+      data = JSON.parse(response.body, symbolize_names: true)
+      expect(data[:errors]).to include({ message: "Poster not found", status: "404" })
+    end
 end

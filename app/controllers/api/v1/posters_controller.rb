@@ -1,4 +1,7 @@
 class Api::V1::PostersController < ApplicationController
+    rescue_from ActiveRecord::RecordNotFound, with: :not_found_response
+    rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity_response
+  
 
     def index
         #base query
@@ -26,39 +29,54 @@ class Api::V1::PostersController < ApplicationController
         else
             render json: PosterSerializer.format_posters(posters)
         end
-
-        #apply sorting 
-        # posters = posters.order(created_at: sort_order)
-
-        #format json response 
-        # render json: PosterSerializer.format_posters(posters)
     end
 
     def show
-        # render json: Poster.find(params[:id])
-        render json: PosterSerializer.format_single_poster(Poster.find(params[:id]))
+        poster = Poster.find(params[:id])
+        if poster
+            render json: PosterSerializer.format_single_poster(poster)
+        else
+            render json: {error: "Poster not found" }, status: :not_found
+        end
     end
 
     def create
-        poster = Poster.create(poster_params)
-        render json: poster
+        poster = Poster.new(poster_params)
+        if poster.save
+            render json: PosterSerializer.format_single_poster(poster), status: :created
+        else
+            render json: { 
+                errors: error_messages(poster.errors)
+            },  
+            status: :unprocessable_entity
+        end
     end
 
     def update
-        # render json: Poster.update(params[:id], poster_params)
-        poster = Poster.find(params[:id])
-        if poster.update(poster_params)
-            render json: poster
+        poster = Poster.find_by(id: params[:id])
+        if poster.nil?
+            render json: { errors: [{ status: "404", message: "Poster not found" }] }, status: :not_found
+        elsif params[:poster][:name].blank?
+            render json: { 
+                errors: [{ status: "422", message: "Name cannot be blank." }]
+            }, status: :unprocessable_entity
+        elsif poster.update(poster_params)
+            render json: PosterSerializer.format_single_poster(poster), status: :ok
         else
-            render json: { error: "poster not found" }, status: :not_found
-            record_not_found(error)
+            render json: { 
+                errors: error_messages(poster.errors)
+            }, status: :unprocessable_entity
         end
     end
 
     def destroy
         poster = Poster.find(params[:id])
-        poster.destroy
-        head :no_content
+        if poster.nil?
+            render json: { errors: [{ message: "Poster not found", status: "404" }] }, status: :not_found
+        else
+            poster.destroy
+            head :no_content
+        end
     end
 
 
@@ -68,6 +86,22 @@ class Api::V1::PostersController < ApplicationController
         params.require(:poster).permit(:name, :description, :price, :year, :vintage, :img_url)
     end
 
-
-
+    def not_found_response
+        render json: { errors: [{ status: '404', message: 'Poster not found'}] }, status: :not_found
+    end
+    
+    def error_messages(errors)
+        errors.full_messages.map do |message|
+            {
+            status: '422',
+            message: message
+            }
+        end
+    end
+    
+    def unprocessable_entity_response(exception)
+        render json: { 
+            errors: error_messages(exception.record.errors) 
+            }, status: :unprocessable_entity
+    end
 end
